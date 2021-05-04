@@ -26,15 +26,7 @@ file_name = "heart.csv"
 names = ['age', 'sex', 'cp', 'trtbps', 'chol', 'fbs', 'restecg', 'thalachh', 'exng', 'oldpeak', 'slp', 'caa', 'thall', 'output']
 dataset = read_csv(file_name, names=names)
 
-
-print(dataset.shape)
-
-print(dataset.head(20))
-
-print(dataset.describe())
-print(dataset.groupby('output').size())
-
-
+o2_sat = 
 
 array = dataset.values
 x = array[:,0:-1]
@@ -43,8 +35,6 @@ y = array[:,-1]
 x = preprocessing.scale(x)
 
 X_train, X_validation, Y_train, Y_validation = train_test_split(x, y, test_size = 0.20, random_state = 1)
-
-
 
 models = []
 models.append(('LR', LogisticRegression(solver='liblinear', multi_class='ovr')))
@@ -63,9 +53,6 @@ for name, model in models:
     names.append(name)
     print('%s: %f (%f)' % (name, cv_results.mean(), cv_results.std()))
 
-pyplot.boxplot(results, labels=names)
-pyplot.title('Algorithm Comparison')
-#pyplot.show()
 
 model = LogisticRegression(solver='liblinear', multi_class='ovr')
 model.fit(X_train, Y_train)
@@ -75,32 +62,3 @@ predictions = model.predict(X_validation)
 print(accuracy_score(Y_validation, predictions))
 print(confusion_matrix(Y_validation, predictions))
 print(classification_report(Y_validation, predictions))
-
-#patient = []
-patient.append(input("Enter Age of the Patient"))
-patient.append(input("Sex:"))
-patient.append(input("cp:"))
-patient.append(input("trtbps:"))
-patient.append(input("chol:"))
-patient.append(input("fbs:"))
-patient.append(input("restecg:"))
-patient.append(input("thatlachh:"))
-patient.append(input("exng:"))
-patient.append(input("oldpeak:"))
-patient.append(input("slp:"))
-patient.append(input("caa:"))
-patient.append(input("thall:"))
-
-patient = list(map(float, patient))
-patient = [patient]
-
-prediction = model.predict(patient)
-if prediction == 1:
-    print("This patient has more chance of experiencing a heart attack")
-else:
-    print("This patient has less chance of experiencing  a heart attack")
-#print(x)
-#print(y)
-
-
-
